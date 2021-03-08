@@ -1,18 +1,28 @@
 import discord
 import random
 from misc import *
+from descs import *
 
+# types of types
+ENTITY = -4
+ITEM = -3
+AMBIENCE = -2
+
+# types of Entities
 HUMANOID = 0
 RODENT = 1
 
+# Entities
 ELF = 1
 DWARF = 2
 HUMAN = 3
 RAT = 4
 
+# Ambience
 WATER = 0
 MUSHROOMS = 1
 
+# Items
 DAGGER = 0
 BOW = 1
 RATION = 2
@@ -154,15 +164,6 @@ Pomieszczenia zaczyna wypełniać się nieprzyjemnym zapachem, kaszlesz ocięża
 Nie masz przy sobię nic poza podstawowym ekwipunkiem i małym posiłkiem. Misja ratunkowa może zająć dni, a nawet tygodnie, nie masz wątpliwości -
 musisz iść w głąb jaskini i znaleźć inne wyjście, inaczej nie przetrwasz. Nie patrz za siebie! 
 ====================================
-komendy:
-'inv' lub 'ekw' (otwórz ekwipunek)
-'uzyj' [przedmiot]
-'sprawdz' [element otoczenia]
-'zaloz' [przedmiot]
-'atakuj' [cel]
-'bron' (sprawdź jaką trzymasz broń)
-'otoczenie' lub 'env' (ponownie sprawdź otoczenie)
-'komendy' (lista poleceń)
 ```
 """
     else:
@@ -174,6 +175,7 @@ Niestety nie ma takiej postaci do wyboru.
     if Character.race > 0:
         inv_gen()
         room_gen()
+        await print_commands(message)
         await room_desc(message)
         return
 
@@ -201,7 +203,7 @@ def inv_gen():
         Item.create(DAGGER, 100, "/ sztylet")
         Item.create(BOW, 100, ") łuk")
         Item.create(RATION, 100, "% racja żywnościowa")
-        Item.create(EMPTY_FLASK, 20, "# pusta fiolka")
+        Item.create(EMPTY_FLASK, 20, "# pusta butelka")
 
         Character.inv.append(0)
         Character.inv.append(1)
@@ -232,10 +234,11 @@ async def check_weapon(message):
 async def equip_weapon(message):
     var = message.content.upper()
     # zaloz
-    it_id = var[5:7]  # todo: probably need to expand for 2 digits things in future
+    it_id = var[6:len(var)]
     text = ""
+    print(it_id)
     if len(it_id) > 0:
-        it_id = int(it_id)
+        it_id = int(it_id)  # todo: need to check if it_id can be integer
         if it_id <= len(Item.ID) - 1:
             print(it_id)
             Character.weapon1 = it_id  # todo: make usable for shields in future(add real types to items)
@@ -275,6 +278,62 @@ def room_gen():
     Room.ambience.append(var)
     Entity.create(RAT, "szczur")  # todo: delete entities after moving to another room
     Entity.create(RAT, "szczur2")
+    return
+
+
+async def entity_env_desc(message):
+    var = message.content.upper()
+    #sprawdz
+    var_txt = var[8:len(var)]
+    print(var_txt)
+    var_id = -1
+    var_type = -1
+    is_in_eq = 0
+    if var_txt == "SZCZUR":
+        var_id = RAT
+        var_type = ENTITY
+    if var_txt == "SZTYLET":
+        var_id = DAGGER
+        var_type = ITEM
+    if var_txt == "ŁUK":
+        var_id = BOW
+        var_type = ITEM
+    if var_txt == "RACJA ŻYWNOŚCIOWA" or var_txt == "RACJA":
+        var_id = RATION
+        var_type = ITEM
+    if var_txt == "PUSTA BUTELKA":
+        var_id = EMPTY_FLASK
+        var_type = ITEM
+    if var_id > -1:
+        if var_type == ENTITY:
+            for x in Entity.entity:
+                if x == var_id:
+                    if var_id == RAT:
+                        await message.channel.send(RAT_ASCII)
+                        await message.channel.send(RAT_DESC)
+                    is_in_eq = 1
+                    break
+        if var_type == ITEM:
+            for x in Character.inv:
+                if x == var_id:
+                    if var_id == DAGGER:
+                        await message.channel.send(DAGGER_ASCII)
+                        await message.channel.send(DAGGER_DESC)
+                    if var_id == BOW:
+                        await message.channel.send(BOW_ASCII)
+                        await message.channel.send(BOW_DESC)
+                    if var_id == RATION:
+                        await message.channel.send(RATION_ASCII)
+                        await message.channel.send(RATION_DESC)
+                    if var_id == EMPTY_FLASK:
+                        await message.channel.send(EMPTY_FLASK_ASCII)
+                        await message.channel.send(EMPTY_FLASK_DESC)
+                    is_in_eq = 1
+                    break
+        if is_in_eq == 0:
+            await message.channel.send("Nie ma takiego elementu otoczenia / stworzenia / przedmiotu w ekwipunku.")
+    else:
+        await message.channel.send("Nie ma takiego elementu otoczenia / stworzenia / przedmiotu w ekwipunku.")
     return
 
 

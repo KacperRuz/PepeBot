@@ -100,6 +100,8 @@ async def on_message(message):
         await room_desc(message)
     if message.content.startswith("komendy") and GameInfo.state == 3:
         await print_commands(message)
+    if message.content.startswith("sprawdz") and GameInfo.state == 3:
+        await entity_env_desc(message)
 
 
 
