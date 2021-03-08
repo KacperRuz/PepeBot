@@ -213,10 +213,12 @@ async def equip_weapon(message):
     text = ""
     if len(it_id) > 0:
         it_id = int(it_id)
-        if it_id <= len(Item.ID):
+        if it_id <= len(Item.ID) - 1:
             print(it_id)
             Character.weapon1 = it_id  # todo: make usable for shields in future(add real types to items)
             text += "Wziąłeś " + str(Item.name[it_id]) + " do prawej ręki."
+        else:
+            text += "Nie ma takiego przedmiotu."
     else:
         text += "Nie ma takiego przedmiotu."
     await message.channel.send(text)
@@ -226,17 +228,20 @@ async def equip_weapon(message):
 async def inv_print(message):
     text = """```asciidoc
 """
-    for x in Character.inv:
-        text_it: str = "[" + str(x) + "]"
-        text_it += Item.name[x]
-        text_it = make_spaces(32, text_it)
-        text += text_it + str(Item.durability[x]) + "%"
-        if x == Character.weapon1:
-            text += " [prawa ręka]"
-        if x == Character.weapon2:
-            text += " [lewa ręka]"
-        text += "\n"
-    text = text + "\n```"
+    if len(Character.inv) > 0:
+        for x in Character.inv:
+            text_it: str = "[" + str(x) + "]"
+            text_it += Item.name[x]
+            text_it = make_spaces(32, text_it)
+            text += text_it + str(Item.durability[x]) + "%"
+            if x == Character.weapon1:
+                text += " [prawa ręka]"
+            if x == Character.weapon2:
+                text += " [lewa ręka]"
+            text += "\n"
+        text = text + "\n```"
+    else:
+        text += "Twój ekwipunek jest kompletnie pusty!```"
     await message.channel.send(text)
     return
 
