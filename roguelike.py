@@ -2,9 +2,13 @@ import discord
 import random
 from misc import *
 
+HUMANOID = 0
+RODENT = 1
+
 ELF = 1
 DWARF = 2
 HUMAN = 3
+RAT = 4
 
 WATER = 0
 MUSHROOMS = 1
@@ -21,7 +25,7 @@ class GameInfo:
 
 class Item:
     ID = []
-    type = []
+    type = []  # todo: seperate type from item
     durability = []
     name = []
 
@@ -31,6 +35,25 @@ class Item:
         Item.durability.append(random.randint(dur, 100))
         Item.name.append(name)
         return
+
+
+class Entity:
+    ID = []
+    type = []
+    entity = []
+    name = []
+    HP = []
+
+    def create(entity, name):
+        Entity.ID.append(len(Entity.ID))
+        Entity.entity.append(entity)
+        Entity.name.append(name)
+        if 1 >= entity <= 3:
+            Entity.type.append(HUMANOID)
+        if 4 >= entity <= 4:
+            Entity.type.append(RODENT)
+        if entity == RAT:
+            Entity.HP.append(random.randint(20, 30))
 
 
 class Character:
@@ -250,6 +273,8 @@ def room_gen():
     Room.exits = random.randint(1, 3)
     var = random.randrange(0, 2, 1)
     Room.ambience.append(var)
+    Entity.create(RAT, "szczur")  # todo: delete entities after moving to another room
+    Entity.create(RAT, "szczur2")
     return
 
 
@@ -261,7 +286,7 @@ async def room_desc(message):
             text = text + "Czujesz 'wodę' pod stopami.\n"
         if x == MUSHROOMS:  # todo: seeing special ambience with dex
             text = text + "Widzisz w okolicy kilka 'grzybów'.\n"
-    text = text + "Mozliwe drogi to: "
+    text = text + "Możliwe drogi to: "
     for x in range(1, Room.exits + 1, 1):
         if x == 1:
             text = text + "'!lewo'"  # todo: special senses with dex
@@ -272,4 +297,16 @@ async def room_desc(message):
     text = text + "\n```"
     await message.channel.send(text)
 
+    if len(Entity.ID) > 0:
+        text = """```cs
+Postacie, które widzisz: \n
+"""
+        for x in Entity.ID:
+            text_ent = "[" + str(Entity.ID[x]) + "] "
+            text_ent += Entity.name[x]
+            text_ent = make_spaces(32, text_ent)
+            text_ent += "(" + str(Entity.HP[x]) + " hp)\n"
+            text += text_ent
+        text += "\n```"
+        await message.channel.send(text)
     return
