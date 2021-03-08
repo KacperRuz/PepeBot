@@ -96,7 +96,7 @@ async def on_message(message):
         await check_weapon(message)
     if message.content.startswith("zaloz") and GameInfo.state == 3:
         await equip_weapon(message)
-    if message.content.startswith("otoczenie") and GameInfo.state == 3 or message.content.startswith("!env") and GameInfo.state == 3:
+    if message.content.startswith("otoczenie") and GameInfo.state == 3 or message.content.startswith("env") and GameInfo.state == 3:
         await room_desc(message)
     if message.content.startswith("komendy") and GameInfo.state == 3:
         await print_commands(message)
