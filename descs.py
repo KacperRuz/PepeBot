@@ -1,3 +1,5 @@
+attack_words = ["uderza", "bije", "wali", "trafia",]
+
 szczur_ascii = """```
               _..----.._    _
             .'  .--.    "-.(0)_
@@ -5,7 +7,7 @@ szczur_ascii = """```
              '''------'---''---'-"
 ```"""
 szczur_desc = """```
-Gryzoń niewiele większy od dużej ludzkiej stopy. Posiada dobry węch
+Gryzoń niewiele większy od dużej ludzkiej stopy. Posiada dobry węch.
 Zje wszystko co nadaję się do zjedzenia, a wypije nawet sok pomidorowy.
 Uwaga! Gryzie po kostkach!
 ```"""
@@ -30,8 +32,8 @@ luk_ascii = """```
 luk_desc = """```
 Łuk stworzony z nienaganną precyzją, przeznaczony do polowań na dużą zwierzynę.
 Idealna broń dystansowa jeżeli masz czas na naciągnięcię cięciwy.
-Posiada dużą siłę wystrzału, jednak ustępuję swojemu następcy - kuszy - w sile naciągu, jednak zaawansowany strzelec
-może trafić w przerwę pomiędzy uzbrojeniem przeciwnika.
+Posiada dużą siłę wystrzału, jednak ustępuję swojemu następcy(kuszy) w sile naciągu.
+Zaawansowany strzelec zdoła trafić w przerwę pomiędzy uzbrojeniem przeciwnika.
 ```
 """
 racja_zywnosciowa_ascii = """```

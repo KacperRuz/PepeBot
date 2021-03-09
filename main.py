@@ -102,6 +102,10 @@ async def on_message(message):
         await print_commands(message)
     if message.content.startswith("sprawdz") and GameInfo.state == 3:
         await entity_env_desc(message)
+    if message.content.startswith("stats") and GameInfo.state == 3:
+        await check_stats(message)
+    if message.content.startswith("atakuj") and GameInfo.state == 3:
+        await char_fight(message)
 
 
 
