@@ -1,7 +1,18 @@
 import discord
 import random
+from varname import nameof
 from misc import *
 from descs import *
+
+# todo lista:
+# statystyki bohatera
+# generowanie poziomu
+# przechodzenie miedzy poziomami
+# walka
+# rozmowa
+# buffy/debuffy
+# uzywanie przedmiotów
+
 
 # types of types
 ENTITY = -4
@@ -18,9 +29,17 @@ DWARF = 2
 HUMAN = 3
 RAT = 4
 
+# types of Ambience
+
 # Ambience
 WATER = 0
 MUSHROOMS = 1
+
+# types of items
+MISC = 0
+MAIN_WEAPON = 1
+SECONDARY_WEAPON = 2
+CONSUMABLE = 3
 
 # Items
 DAGGER = 0
@@ -35,15 +54,24 @@ class GameInfo:
 
 class Item:
     ID = []
-    type = []  # todo: seperate type from item
+    item = []
+    type = []
     durability = []
     name = []
 
-    def create(type, dur, name):
+    def create(item, dur, name):
         Item.ID.append(len(Item.ID))
-        Item.type.append(type)
-        Item.durability.append(random.randint(dur, 100))
+        Item.item.append(item)
         Item.name.append(name)
+        Item.durability.append(random.randint(dur, 100))
+        if item == DAGGER:
+            Item.type.append(SECONDARY_WEAPON)
+        if item == BOW:
+            Item.type.append(MAIN_WEAPON)
+        if item == RATION:
+            Item.type.append(CONSUMABLE)
+        if item == EMPTY_FLASK:
+            Item.type.append(MISC)
         return
 
 
@@ -238,13 +266,21 @@ async def equip_weapon(message):
     text = ""
     print(it_id)
     if len(it_id) > 0:
-        it_id = int(it_id)  # todo: need to check if it_id can be integer
-        if it_id <= len(Item.ID) - 1:
-            print(it_id)
-            Character.weapon1 = it_id  # todo: make usable for shields in future(add real types to items)
-            text += "Wziąłeś " + str(Item.name[it_id]) + " do prawej ręki."
+        if it_id.isnumeric():
+            it_id = int(it_id)
+
+            if it_id <= len(Item.ID) - 1:
+                print(it_id)
+                if Item.type[it_id] == MAIN_WEAPON:
+                    Character.weapon1 = it_id
+                    text += "Wziąłeś " + str(Item.name[it_id]) + " do prawej ręki."
+                else:
+                    Character.weapon2 = it_id
+                    text += "Wziąłeś " + str(Item.name[it_id]) + " do lewej ręki."
+            else:
+                text += "Nie ma takiego przedmiotu."
         else:
-            text += "Nie ma takiego przedmiotu."
+            text += "Niepoprawne użycie komendy. zaloz [liczba_przedmiotu_w_inv]"
     else:
         text += "Nie ma takiego przedmiotu."
     await message.channel.send(text)
@@ -329,6 +365,7 @@ async def entity_env_desc(message):
                         await message.channel.send(EMPTY_FLASK_ASCII)
                         await message.channel.send(EMPTY_FLASK_DESC)
                     is_in_eq = 1
+                    print(Item.type[var_id])
                     break
         if is_in_eq == 0:
             await message.channel.send("Nie ma takiego elementu otoczenia / stworzenia / przedmiotu w ekwipunku.")
