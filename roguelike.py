@@ -228,10 +228,10 @@ Gdy już podejmiesz decyzję, wpisz 'odpowiednią cyfrę' w polu tekstowym.
 
 def inv_gen():
     if Character.race == ELF:
-        Item.create(DAGGER, 100, "/ sztylet")
-        Item.create(BOW, 100, ") łuk")
-        Item.create(RATION, 100, "% racja żywnościowa")
-        Item.create(EMPTY_FLASK, 20, "# pusta butelka")
+        Item.create(DAGGER, 100, "sztylet")
+        Item.create(BOW, 100, "łuk")
+        Item.create(RATION, 100, "racja żywnościowa")
+        Item.create(EMPTY_FLASK, 20, "pusta butelka")
 
         Character.inv.append(0)
         Character.inv.append(1)
@@ -321,55 +321,35 @@ async def entity_env_desc(message):
     var = message.content.upper()
     #sprawdz
     var_txt = var[8:len(var)]
+    var_txt = var_txt.lower()
     print(var_txt)
     var_id = -1
-    var_type = -1
     is_in_eq = 0
-    if var_txt == "SZCZUR":
-        var_id = RAT
-        var_type = ENTITY
-    if var_txt == "SZTYLET":
-        var_id = DAGGER
-        var_type = ITEM
-    if var_txt == "ŁUK":
-        var_id = BOW
-        var_type = ITEM
-    if var_txt == "RACJA ŻYWNOŚCIOWA" or var_txt == "RACJA":
-        var_id = RATION
-        var_type = ITEM
-    if var_txt == "PUSTA BUTELKA":
-        var_id = EMPTY_FLASK
-        var_type = ITEM
-    if var_id > -1:
-        if var_type == ENTITY:
-            for x in Entity.entity:
-                if x == var_id:
-                    if var_id == RAT:
-                        await message.channel.send(RAT_ASCII)
-                        await message.channel.send(RAT_DESC)
-                    is_in_eq = 1
-                    break
-        if var_type == ITEM:
-            for x in Character.inv:
-                if x == var_id:
-                    if var_id == DAGGER:
-                        await message.channel.send(DAGGER_ASCII)
-                        await message.channel.send(DAGGER_DESC)
-                    if var_id == BOW:
-                        await message.channel.send(BOW_ASCII)
-                        await message.channel.send(BOW_DESC)
-                    if var_id == RATION:
-                        await message.channel.send(RATION_ASCII)
-                        await message.channel.send(RATION_DESC)
-                    if var_id == EMPTY_FLASK:
-                        await message.channel.send(EMPTY_FLASK_ASCII)
-                        await message.channel.send(EMPTY_FLASK_DESC)
-                    is_in_eq = 1
-                    print(Item.type[var_id])
-                    break
-        if is_in_eq == 0:
-            await message.channel.send("Nie ma takiego elementu otoczenia / stworzenia / przedmiotu w ekwipunku.")
-    else:
+    for x in Item.name:
+        if x == var_txt:
+            var_txt = replace_polish_chars(var_txt)
+            var_txt = var_txt.replace(" ", "_")
+            var_ascii = var_txt + "_ascii"
+            print(var_ascii)
+            await message.channel.send(globals()[var_ascii])
+            var_desc = var_txt + "_desc"
+            print(var_desc)
+            await message.channel.send(globals()[var_desc])
+            is_in_eq = 1
+            break
+    if is_in_eq == 0:
+        for x in Entity.name:
+            if x == var_txt:
+                var_txt = replace_polish_chars(var_txt)
+                var_txt = var_txt.replace(" ", "_")
+                var_ascii = var_txt + "_ascii"
+                print(var_ascii)
+                await message.channel.send(globals()[var_ascii])
+                var_desc = var_txt + "_desc"
+                print(var_desc)
+                await message.channel.send(globals()[var_desc])
+                is_in_eq = 1
+    if is_in_eq == 0:
         await message.channel.send("Nie ma takiego elementu otoczenia / stworzenia / przedmiotu w ekwipunku.")
     return
 

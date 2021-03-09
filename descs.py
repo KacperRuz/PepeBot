@@ -1,23 +1,23 @@
-RAT_ASCII = """```
+szczur_ascii = """```
               _..----.._    _
             .'  .--.    "-.(0)_
 '-.__.-'"'=:|   ,  _)_ \__ . c\'-..
              '''------'---''---'-"
 ```"""
-RAT_DESC = """```
+szczur_desc = """```
 Gryzoń niewiele większy od dużej ludzkiej stopy. Posiada dobry węch
 Zje wszystko co nadaję się do zjedzenia, a wypije nawet sok pomidorowy.
 Uwaga! Gryzie po kostkach!
 ```"""
-DAGGER_ASCII = """```
+sztylet_ascii = """```
 )xxxxx[;;;;;;;;;>
 ```
 """
-DAGGER_DESC = """```
+sztylet_desc = """```
 Pospolity sztylet. Można nim oprawić mniejszą zwierzynę, przecinać gałęzie, bądź atakować na bliski dystans.
 ```
 """
-BOW_ASCII = """```
+luk_ascii = """```
    (
     |
      )
@@ -27,14 +27,14 @@ BOW_ASCII = """```
    (
 ```
 """
-BOW_DESC = """```
+luk_desc = """```
 Łuk stworzony z nienaganną precyzją, przeznaczony do polowań na dużą zwierzynę.
 Idealna broń dystansowa jeżeli masz czas na naciągnięcię cięciwy.
 Posiada dużą siłę wystrzału, jednak ustępuję swojemu następcy - kuszy - w sile naciągu, jednak zaawansowany strzelec
 może trafić w przerwę pomiędzy uzbrojeniem przeciwnika.
 ```
 """
-RATION_ASCII = """```
+racja_zywnosciowa_ascii = """```
           ___
         .'o O'-._
        / O o_.-`|
@@ -44,14 +44,14 @@ RATION_ASCII = """```
       '--`     
 ```
 """
-RATION_DESC = """```
+racja_zywnosciowa_desc = """```
 Racja żywnościowa składająca się z:
 sera pleśniowego, suszonego mięsa, suszonych owoców, tuzina sucharów, manierki czystej wody, garści ziół i kilku kostek cukru.
 Posiłek, który zapewni ci wystarczająco energii na cały dzień w podróży.
 Składniki nie psują się.
 ```
 """
-EMPTY_FLASK_ASCII = """```bash
+pusta_butelka_ascii = """```bash
    #
   :#:
   : :
@@ -65,7 +65,7 @@ EMPTY_FLASK_ASCII = """```bash
 :_____:
 ```
 """
-EMPTY_FLASK_DESC = """```
+pusta_butelka_desc = """```
 Pusta szklana butelka z korkiem.
 Na etykiecie napisane jest: JABOL, r. 1288
 To było pamiętne lato.
