@@ -1,0 +1,42 @@
+# types of types
+CHARACTER = -5
+ENTITY = -4
+ITEM = -3
+AMBIENCE = -2
+
+# types of Entities
+HUMANOID = 0
+RODENT = 1
+
+# Entities
+ELF = 1
+DWARF = 2
+HUMAN = 3
+RAT = 4
+
+# types of Ambience
+
+# Ambience
+WATER = 0
+MUSHROOMS = 1
+POOL_OF_WATER = 2
+LAKE = 3
+VINES = 4
+SKELETONS = 5
+MINERALS = 6
+VEGETATION = 7
+HOLE = 8
+ROCK_SHELF = 9
+
+# types of items
+MISC = 0
+MAIN_WEAPON = 1
+SECONDARY_WEAPON = 2
+CONSUMABLE = 3
+ARMOR = 4
+
+# Items
+DAGGER = 0
+BOW = 1
+RATION = 2
+EMPTY_FLASK = 3

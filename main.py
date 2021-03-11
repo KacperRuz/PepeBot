@@ -2,7 +2,6 @@ import discord
 import random
 from keepalive import keep_alive
 from datetime import datetime
-from roguelike import *
 
 client = discord.Client()
 
@@ -23,6 +22,19 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+    from roguelike import GameInfo
+    from roguelike import rog_start
+    from roguelike import rog_cancel
+    from roguelike import rog_begin
+    from roguelike import choose_character
+    from inventory import inv_print
+    from inventory import check_weapon
+    from inventory import equip_weapon
+    from descriptions import room_desc
+    from descriptions import check_stats
+    from descriptions import entity_env_desc
+    from misc import print_commands
+    from combat import char_fight
     if message.author == client.user:
         return
 
