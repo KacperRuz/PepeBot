@@ -1,6 +1,7 @@
 from globals import *
 from descs import *
 
+
 async def check_stats(message):
     from roguelike import Character
     text = f"""```cs
@@ -58,12 +59,12 @@ async def room_desc(message):
     text = text + "Możliwe drogi to: "
     for x in range(1, Room.exits + 1, 1):
         if x == 1:
-            text += "'!lewo'"  # todo: special senses with perception
+            text += "'lewo'"  # todo: special senses with perception
         if x == 2:
-            text += "'!przod'"
+            text += ", 'przod'"
         if x == 3:
-            text += "'!prawo'"
-    text = text + "\n```"
+            text += ", 'prawo'"
+    text = text + ".\n```"
     await message.channel.send(text)
 
     if len(Entity.ID) > 0:

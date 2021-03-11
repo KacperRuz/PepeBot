@@ -12,11 +12,11 @@ def inv_gen():
         Item.create(BOW, 100, "łuk")
         Item.create(RATION, 100, "racja żywnościowa")
         Item.create(EMPTY_FLASK, 20, "pusta butelka")
+        Item.create(ELF_ROBE, 100, "elfie odzienie")
 
-        Character.inv.append(0)
-        Character.inv.append(1)
-        Character.inv.append(2)
-        Character.inv.append(3)
+        Character.armor = len(Item.item) - 1
+        for x in range(0, len(Item.item), 1):
+            Character.inv.append(range(0, len(Item.item), 1))
     return
     # todo: more starting eq
 

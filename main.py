@@ -35,6 +35,7 @@ async def on_message(message):
     from descriptions import entity_env_desc
     from misc import print_commands
     from combat import char_fight
+    from exploration import room_move
     if message.author == client.user:
         return
 
@@ -118,6 +119,10 @@ async def on_message(message):
         await check_stats(message)
     if message.content.startswith("atakuj") and GameInfo.state == 3:
         await char_fight(message)
+    if message.content.startswith("lewo") or message.content.startswith("przod") or message.content.startswith("prawo"):
+        if GameInfo.state == 3:
+            await room_move(message)
+
 
 
 

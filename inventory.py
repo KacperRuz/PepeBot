@@ -17,6 +17,8 @@ async def inv_print(message):
                 text += " [prawa ręka]"
             if x == Character.weapon2:
                 text += " [lewa ręka]"
+            if x == Character.armor:
+                text += " [ubrane]"
             text += "\n"
         text = text + "\n```"
     else:
@@ -39,12 +41,13 @@ async def equip_weapon(message):
 
             if it_id <= len(Item.ID) - 1:
                 print(it_id)
-                if Item.type[it_id] == MAIN_WEAPON:
-                    Character.weapon1 = it_id
-                    text += "Wziąłeś " + str(Item.name[it_id]) + " do prawej ręki."
-                else:
-                    Character.weapon2 = it_id
-                    text += "Wziąłeś " + str(Item.name[it_id]) + " do lewej ręki."
+                if it_id != Character.armor:
+                    if Item.type[it_id] == MAIN_WEAPON:
+                        Character.weapon1 = it_id
+                        text += "Wziąłeś " + str(Item.name[it_id]) + " do prawej ręki."
+                    else:
+                        Character.weapon2 = it_id
+                        text += "Wziąłeś " + str(Item.name[it_id]) + " do lewej ręki."
             else:
                 text += "Nie ma takiego przedmiotu."
         else:

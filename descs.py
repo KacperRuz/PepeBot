@@ -1,4 +1,4 @@
-attack_words = ["uderza", "bije", "wali", "trafia",]
+attack_words = ["uderza", "bije", "wali", "trafia"]
 
 szczur_ascii = """```
               _..----.._    _
@@ -73,3 +73,10 @@ Na etykiecie napisane jest: JABOL, r. 1288
 To było pamiętne lato.
 ```
 """
+elfie_odzienie_ascii = """```
+
+```
+"""
+elfie_odzienie_desc = """```
+Proste ubrania wyszyte z płótna z skórzanymi dodatkami. Koszula, płaszcz z kapturem, spodnie, skórzane rękawice i buty.
+```"""

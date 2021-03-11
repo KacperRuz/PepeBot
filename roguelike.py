@@ -6,7 +6,7 @@ from descs import *
 from globals import *
 from descriptions import *
 from inventory import *
-from generating import *
+from generation import *
 from combat import *
 
 # todo lista:
@@ -23,6 +23,8 @@ from combat import *
         # * predkosc broni i przeciwników
         # * śmierć przeciwników
         # * randomowy rozstrzał DMG
+        # * zbroje
+        # * walka bez broni / z dodatkową
 # rozmowa
 # buffy/debuffy
 # uzywanie przedmiotów
@@ -60,7 +62,20 @@ class Item:
             Item.type.append(CONSUMABLE)
         if item == EMPTY_FLASK:
             Item.type.append(MISC)
+        if item == ELF_ROBE:
+            Item.type.append(ARMOR)
+            Item.DMG[len(Item.ID) - 1] = 3
+            Item.SPEED[len(Item.ID) - 1] = 40  # speed = chance to protect
         return
+
+    def delete(item):
+        Item.ID.pop(item)
+        Item.item.pop(item)
+        Item.type.pop(item)
+        Item.durability.pop(item)
+        Item.name.pop(item)
+        Item.DMG.pop(item)
+        Item.SPEED.pop(item)
 
 
 class Entity:
@@ -97,6 +112,17 @@ class Entity:
         Entity.CRIT.pop(entity)
         Entity.SIZE.pop(entity)
 
+    @staticmethod
+    def cleanup():
+        Entity.ID.clear()
+        Entity.type.clear()
+        Entity.entity.clear()
+        Entity.name.clear()
+        Entity.HP.clear()
+        Entity.DMG.clear()
+        Entity.CRIT.clear()
+        Entity.SIZE.clear()
+
 
 class Character:
     race = 0
@@ -118,6 +144,12 @@ class Room:
     entities = []
     objects = []
     ambience = []
+
+    @staticmethod
+    def cleanup():
+        Room.exits = 0
+        Room.ambience.clear()
+        return
 
 
 async def rog_cancel(message):
